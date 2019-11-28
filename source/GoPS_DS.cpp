@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 
 struct Node{
     int streetnum;
@@ -16,6 +17,9 @@ struct Node{
     Node *SStreet;
     Node *WAvenue;
 };
+
+// Define array of node pointers
+std::vector < Node *> nodeVect;
 
 class street_list{
     private:
@@ -31,34 +35,47 @@ class street_list{
         }
 };
 
-//Node *searchNode(Node *cur_location){
-//
-//
-//}
+Node *searchNode(Node *cur_location){
+    Node *relaventNode = NULL;
+    for(int i = 0; i < nodeVect.size(); i++){
+            if( nodeVect[i] -> streetnum == cur_location -> streetnum && \
+                nodeVect[i] -> avenuenum == cur_location -> avenuenum){
+                relaventNode = nodeVect[i];
+            }else{
+                continue;
+            }
 
-void create_graph(int streetnum, int avenum){
+    }
+    return relaventNode;
+}
+
+void create_graph(int streetnum, int avenuenum){
     Node *temp_location = new Node;
     temp_location -> streetnum = streetnum;
-    temp_location -> avenuenum = avenum;
+    temp_location -> avenuenum = avenuenum;
+
+    nodeVect.push_back(temp_location);
+    Node *found_location = searchNode(temp_location);
 
     // North increments, south decrements
-    temp_location -> NStreet = streetnum++;
-    temp_location -> SStreet = streetnum--;
+    found_location -> NStreet = streetnum+++ ;
+    found_location -> SStreet = streetnum--;
 
     // East decrements, West increments
-    temp_location -> EStreet = streetnum--
-    temp_location -> WStreet = streetnum++;
+    //temp_location -> EAvenue = avenuenum--;
+    //temp_location -> WAvenue = avenuenum++;
 
-    if(head == NULL){
-        head = temp_location;
-        temp_location = NULL;
-    }//else{
+    //if(head == NULL){
+    //    head = temp_location;
+    //    temp_location = NULL;
+    //}else{
 //        target_node = searchNode(Node *temp_location);
 //    }
 };
 
 int main(){
     std::cout << "Hello World" << std::endl;
+    create_graph(59, 10);
 
     return 0;
 };

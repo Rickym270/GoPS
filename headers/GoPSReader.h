@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <vector>
+#include <map>
 
 class GoPSReader{
     public:
@@ -23,6 +25,8 @@ class GoPSReader{
     private:
         std::string SOURCE_FILE;
         std::string NMEAData;
+
+        std::vector<std::map<std::string, std::string> > location_vecmap;
 
 };
 

@@ -1,4 +1,4 @@
-#include "GoPSReader.h"
+#include "../headers/GoPSReader.h"
 
 void GoPSReader::set_filename(std::string FILENAME){
     // SET the SOURCE_FILE var into the filename
@@ -27,7 +27,7 @@ std::string GoPSReader::get_content(){
 };
 
 int main(){
-    std::string FILE_NAME = "etc/NMEAData.csv";
+    std::string FILE_NAME = "../data/Sample_NMEAData.csv";
     GoPSReader NMEAData_h;
     NMEAData_h.set_filename(FILE_NAME);
 
@@ -37,5 +37,7 @@ int main(){
     std::cout << num_lines << std::endl;
     std::cout << "|" << data << "|" << std::endl;
 
+    //NMEAData_h.location_vecmap.push_back(std::map<std::string, std::string>());
+    std::make_pair(0,1);
     return 0;
 };
