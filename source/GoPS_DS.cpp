@@ -54,12 +54,13 @@ void create_graph(int streetnum, int avenuenum){
     temp_location -> streetnum = streetnum;
     temp_location -> avenuenum = avenuenum;
 
+    // Add to vector of Node pointers
     nodeVect.push_back(temp_location);
     Node *found_location = searchNode(temp_location);
 
     // North increments, south decrements
-    found_location -> NStreet = streetnum+++ ;
-    found_location -> SStreet = streetnum--;
+    // found_location -> NStreet = streetnum+++ ;
+    // found_location -> SStreet = streetnum--;
 
     // East decrements, West increments
     //temp_location -> EAvenue = avenuenum--;
@@ -75,7 +76,12 @@ void create_graph(int streetnum, int avenuenum){
 
 int main(){
     std::cout << "Hello World" << std::endl;
-    create_graph(59, 10);
+    create_graph(59, 10);   //Origin
+
+    create_graph(60, 10);   //North
+    create_graph(59, 9);    //East
+    create_graph(58, 10);   //South
+    create_graph(59, 11);   //West
 
     return 0;
 };
