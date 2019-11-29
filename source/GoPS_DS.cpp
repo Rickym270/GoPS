@@ -1,7 +1,7 @@
 /*
  *  Author: Ricky Martinez
- *  Class: CSCI 373 Professor Liu
- *
+ *  Purpose: To build a working simple navigation system. Goal is to practice data structures, building, linking and
+ *           working with thm
  */
 
 #include <iostream>
