@@ -37,27 +37,62 @@ class street_list{
 
 Node *searchNode(Node *cur_location){
     Node *relaventNode = NULL;
-    for(int i = 0; i < nodeVect.size(); i++){
-            if( nodeVect[i] -> streetnum == cur_location -> streetnum && \
-                nodeVect[i] -> avenuenum == cur_location -> avenuenum){
-                relaventNode = nodeVect[i];
-            }else{
-                continue;
-            }
+    std::cout << "Looking for: " << cur_location -> streetnum << "st " << cur_location -> avenuenum << std::endl;;
 
+    for(int i = 0; i < nodeVect.size(); i++){
+        //std::cout << "i: " << i << "  " << nodeVect[i] << std::endl;
+        if( nodeVect[i] -> streetnum == cur_location -> streetnum && \
+            nodeVect[i] -> avenuenum == cur_location -> avenuenum){
+            
+            break;
+        }else{
+            continue;
+        }
     }
     return relaventNode;
 }
 
+Node *search_NS_Node(Node *cur_location){
+    // Find the street north of cur_location
+    Node *relaventNode = NULL;
+    std::cout << "Looking for: " << cur_location -> streetnum << "st " << cur_location -> avenuenum << std::endl;;
+
+    // TODO: Loop through all the nodes in nodeVect
+    for(int i = 0; i < nodeVect.size(); i++){
+        // Condition:
+        //      if streetnumproperty is equal to streetnum + 1 and avenue is the same, return the node
+        if( nodeVect[i] -> streetnum == (cur_location -> streetnum) + 1 &&\
+            nodeVect[i] -> avenuenum == cur_location -> avenuenum){
+            relaventNode = nodeVect[i];
+            break;
+        }else{
+            continue;
+        }
+    }
+    return relaventNode;
+}
 void create_graph(int streetnum, int avenuenum){
     Node *temp_location = new Node;
+    // Iterator used to store the position  
+    // of searched element 
+    std::vector< Node* >::iterator it; 
+    
     temp_location -> streetnum = streetnum;
     temp_location -> avenuenum = avenuenum;
 
     // Add to vector of Node pointers
     nodeVect.push_back(temp_location);
-    Node *found_location = searchNode(temp_location);
+    //Node *found_location = searchNode(temp_location);
 
+    // Search for NS node
+    Node *found_location = search_NS_Node(temp_location);
+    it = std::find(nodeVect.begin(), nodeVect.end(), found_location);
+    // Check if node belongs to nodeVect
+    if ( it != nodeVect.end() ) {
+        std::cout << "Found location!" << std::endl;
+        std::cout << found_location -> streetnum << std::endl;
+        std::cout << found_location -> avenuenum << std::endl;
+    }
     // North increments, south decrements
     // found_location -> NStreet = streetnum+++ ;
     // found_location -> SStreet = streetnum--;
