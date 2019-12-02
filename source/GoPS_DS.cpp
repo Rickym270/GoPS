@@ -1,6 +1,6 @@
 /*
  *  Author: Ricky Martinez
- *  Class: CSCI 373 Professor Liu
+ *  Purpose: Build a DS for to work the future GPS to build
  *
  */
 
