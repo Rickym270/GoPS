@@ -8,7 +8,6 @@
 #include <map>
 #include <vector>
 #include "../headers/GoPS_DS.h"
-#include "GoPS_Exceptions.cpp"
 
 struct Node{
     int streetnum;
@@ -129,6 +128,7 @@ Node *searchAllNode(Node *cur_location){
     std::cout << "Looking for: " << cur_location -> streetnum << "st " \
               << cur_location -> avenuenum << std::endl;;
     Node *NSNode, *EANode, *SSNode, *WANode;
+    std::string err = "";
     try{
         NSNode = search_NS_Node(cur_location);
         EANode = search_EA_Node(cur_location);
@@ -145,8 +145,12 @@ Node *searchAllNode(Node *cur_location){
             throw "WANode";
         }
     }catch(const char *x){
-        std::cout << "Exception raised:" << std::endl;
-        std::cout << x <<" couldn't be found. Check that it exists." << std::endl;
+        std::cout << "\n\nException raised:" << std::endl;
+        std::cout << x << " couldn't be found. Check that it exists for: \n" \
+                              + std::to_string(cur_location -> streetnum) + "st "\
+                              + std::to_string(cur_location -> avenuenum) + "ave "\
+                              + "\n\n" << std::endl;;
+
     }
     
     // If no link can be adequately established, throw StreetNotFound Exception.
