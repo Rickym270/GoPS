@@ -187,25 +187,9 @@ void create_node(int streetnum, int avenuenum, bool auto_add = false){
             std::cout << "Found all locations for " << temp_location-> streetnum << "st "\
                                                     << temp_location -> avenuenum << "ave"\
             << std::endl;
-            //std::cout << found_location -> streetnum << std::endl;
-            //std::cout << found_location -> avenuenum << std::endl;
             std::cout << "Done." << std::endl;
         }
     }
-    // North increments, south decrements
-    // found_location -> NStreet = streetnum+++ ;
-    // found_location -> SStreet = streetnum--;
-
-    // East decrements, West increments
-    //temp_location -> EAvenue = avenuenum--;
-    //temp_location -> WAvenue = avenuenum++;
-
-    //if(head == NULL){
-    //    head = temp_location;
-    //    temp_location = NULL;
-    //}else{
-//        target_node = searchNode(Node *temp_location);
-//    }
 };
 
 int main(){
