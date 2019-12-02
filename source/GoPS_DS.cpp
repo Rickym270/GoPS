@@ -1,12 +1,14 @@
 /*
  *  Author: Ricky Martinez
- *  Purpose: To build a working simple navigation system. Goal is to practice data structures, building, linking and
- *           working with thm
+ *  Class: CSCI 373 Professor Liu
+ *
  */
 
 #include <iostream>
 #include <map>
 #include <vector>
+#include "../headers/GoPS_DS.h"
+#include "GoPS_Exceptions.cpp"
 
 struct Node{
     int streetnum;
@@ -38,7 +40,9 @@ class street_list{
 Node *search_NS_Node(Node *cur_location){
     // Find the street NORTH of cur_location. NORTH incrememnts.
     Node *relaventNode = NULL;
-    std::cout << "Looking for: " << cur_location -> streetnum << "st " << cur_location -> avenuenum << std::endl;;
+    std::cout << "Looking for: " << cur_location -> streetnum << "st " \
+              << cur_location -> avenuenum \
+                      << " North Street" << std::endl;
 
     // TODO: Loop through all the nodes in nodeVect
     for(int i = 0; i < nodeVect.size(); i++){
@@ -58,7 +62,9 @@ Node *search_NS_Node(Node *cur_location){
 Node *search_EA_Node(Node *cur_location){
     // Find the street EAST of cur_location, EAST decrements
     Node *relaventNode = NULL;
-    std::cout << "Looking for: " << cur_location -> streetnum << "st " << cur_location -> avenuenum << std::endl;;
+    std::cout << "Looking for: " << cur_location -> streetnum << "st " \
+              << cur_location -> avenuenum \
+              << " East Ave" << std::endl;
 
     // TODO: Loop through all the nodes in nodeVect
     for(int i = 0; i < nodeVect.size(); i++){
@@ -78,7 +84,9 @@ Node *search_EA_Node(Node *cur_location){
 Node *search_SS_Node(Node *cur_location){
     // Find the street SOUTH of cur_location, SOUTH increments
     Node *relaventNode = NULL;
-    std::cout << "Looking for: " << cur_location -> streetnum << "st " << cur_location -> avenuenum << std::endl;;
+    std::cout << "Looking for: " << cur_location -> streetnum << "st " \
+              << cur_location -> avenuenum \
+              << " South Street" << std::endl;
 
     // TODO: Loop through all the nodes in nodeVect
     for(int i = 0; i < nodeVect.size(); i++){
@@ -98,7 +106,9 @@ Node *search_SS_Node(Node *cur_location){
 Node *search_WA_Node(Node *cur_location){
     // Find the Avenue WEST of cur_location, WEST increments
     Node *relaventNode = NULL;
-    std::cout << "Looking for: " << cur_location -> streetnum << "st " << cur_location -> avenuenum << std::endl;;
+    std::cout << "Looking for: " << cur_location -> streetnum << "st " \
+              << cur_location -> avenuenum \
+              << " West Avenue" << std::endl;;
 
     // TODO: Loop through all the nodes in nodeVect
     for(int i = 0; i < nodeVect.size(); i++){
@@ -116,32 +126,41 @@ Node *search_WA_Node(Node *cur_location){
 }
 
 Node *searchAllNode(Node *cur_location){
-    Node *relaventNode = NULL;
     std::cout << "Looking for: " << cur_location -> streetnum << "st " \
               << cur_location -> avenuenum << std::endl;;
-
+    Node *NSNode, *EANode, *SSNode, *WANode;
     try{
         NSNode = search_NS_Node(cur_location);
         EANode = search_EA_Node(cur_location);
         SSNode = search_SS_Node(cur_location);
         WANode = search_WA_Node(cur_location);
-    }catch(StreetNotFound snf){
-        std::cout << "Exception raised:\n\
-                      One or more streets/avenues couldn't be found. \
-                      Check that they all exist." << std::endl;
+
+        if( !NSNode){
+            throw "NSNode";
+        }if(!EANode){
+            throw "EANode";
+        }if(!SSNode){
+            throw "SSNode";
+        }if(!WANode){
+            throw "WANode";
+        }
+    }catch(const char *x){
+        std::cout << "Exception raised:" << std::endl;
+        std::cout << x <<" couldn't be found. Check that it exists." << std::endl;
     }
     
     // If no link can be adequately established, throw StreetNotFound Exception.
     if( NSNode && EANode && SSNode && WANode ){
-            cur_location ->
-        return relaventNode;
-    }else{
-        throw StreetNotFound( std::cout << " Exception raise:\n 
-                                             One or more streets/avenues couldn't be found. \
-                                             Check that they all exist." std::endl;);
-}
-
-void create_node(int streetnum, int avenuenum, bool auto_add = false;){
+        cur_location -> NStreet = NSNode;
+        cur_location -> EAvenue = EANode;
+        cur_location -> SStreet = SSNode;
+        cur_location -> WAvenue = WANode;
+    }
+    
+    return cur_location;
+};
+    
+void create_node(int streetnum, int avenuenum, bool auto_add = false){
     Node *temp_location = new Node;
     // Iterator used to store the position  
     // of searched element 
@@ -156,13 +175,14 @@ void create_node(int streetnum, int avenuenum, bool auto_add = false;){
 
     if( auto_add ) {
         // Search for all relavent streets/avcenues of a node
-        Node *found_location = searchAllNode(temp_location, location = "NS");
+        Node *found_location = searchAllNode(temp_location);
         // Create an iterator
         it = std::find(nodeVect.begin(), nodeVect.end(), found_location);
         // Check if nodeVect contains found_location
         if ( it != nodeVect.end() ) {
-            std::cout << "Found NS location! Linking...";
-            temp_location -> NStreet = found_location; 
+            std::cout << "Found all locations for " << temp_location-> streetnum << "st "\
+                                                    << temp_location -> avenuenum << "ave"\
+            << std::endl;
             //std::cout << found_location -> streetnum << std::endl;
             //std::cout << found_location -> avenuenum << std::endl;
             std::cout << "Done." << std::endl;
@@ -185,7 +205,8 @@ void create_node(int streetnum, int avenuenum, bool auto_add = false;){
 };
 
 int main(){
-    std::cout << "Hello World" << std::endl;
+    std::cout << "Running GoPS_DS.cpp" << std::endl;
+    bool auto_add;
     create_node(59, 10, auto_add = true);   //Origin
 
     create_node(60, 10);   //North
