@@ -4,44 +4,13 @@
  *
  */
 
-#include <iostream>
-#include <map>
-#include <vector>
 #include "../headers/GoPS_DS.h"
 
-struct Node{
-    int streetnum;
-    int avenuenum;
-
-    Node *NStreet;
-    Node *EAvenue;
-    Node *SStreet;
-    Node *WAvenue;
-};
-
-// Define array of node pointers
-std::vector < Node *> nodeVect;
-
-class street_list{
-    private:
-        Node *head, *north, *east, *south, *west;;
-    public:
-        street_list(){
-            head = NULL;
-
-            north = NULL;
-            east = NULL;
-            south = NULL;
-            west = NULL;
-        }
-};
-
-Node *search_NS_Node(Node *cur_location){
-    // Find the street NORTH of cur_location. NORTH incrememnts.
+GoPS_Map::Node *GoPS_Map::search_NS_Node(Node *cur_location){
     Node *relaventNode = NULL;
-    std::cout << "Looking for: " << cur_location -> streetnum << "st " \
+    std::cout << "Looking for: " << (cur_location -> streetnum) + 1 << "st " \
               << cur_location -> avenuenum \
-                      << " North Street" << std::endl;
+              << " North Street... ";
 
     // TODO: Loop through all the nodes in nodeVect
     for(int i = 0; i < nodeVect.size(); i++){
@@ -49,6 +18,7 @@ Node *search_NS_Node(Node *cur_location){
         //      if streetnumproperty is equal to streetnum + 1 and avenue is the same, return the node
         if( nodeVect[i] -> streetnum == (cur_location -> streetnum) + 1 &&\
             nodeVect[i] -> avenuenum == cur_location -> avenuenum){
+            std::cout << "Found!" << std::endl;
             relaventNode = nodeVect[i];
             break;
         }else{
@@ -58,19 +28,20 @@ Node *search_NS_Node(Node *cur_location){
     return relaventNode;
 }
 
-Node *search_EA_Node(Node *cur_location){
-    // Find the street EAST of cur_location, EAST decrements
+GoPS_Map::Node *GoPS_Map::search_EA_Node(Node *cur_location){
     Node *relaventNode = NULL;
     std::cout << "Looking for: " << cur_location -> streetnum << "st " \
-              << cur_location -> avenuenum \
-              << " East Ave" << std::endl;
+              << (cur_location -> avenuenum) - 1 \
+              << " East Ave... ";
 
     // TODO: Loop through all the nodes in nodeVect
     for(int i = 0; i < nodeVect.size(); i++){
         // Condition:
         //      if streetnumproperty is equal to avenuenum - 1 and avenue is the same, return the node
-        if( nodeVect[i] -> streetnum == (cur_location -> avenuenum) - 1 &&\
-            nodeVect[i] -> avenuenum == cur_location -> streetnum){
+        // std::cout << (cur_location -> avenuenum) - 1 << "St" << cur_location -> street
+        if( nodeVect[i] -> avenuenum == (cur_location -> avenuenum) - 1 &&\
+            nodeVect[i] -> streetnum == cur_location -> streetnum){
+            std::cout << "Found!" << std::endl;
             relaventNode = nodeVect[i];
             break;
         }else{
@@ -80,19 +51,19 @@ Node *search_EA_Node(Node *cur_location){
     return relaventNode;
 }
 
-Node *search_SS_Node(Node *cur_location){
-    // Find the street SOUTH of cur_location, SOUTH increments
+GoPS_Map::Node *GoPS_Map::search_SS_Node(Node *cur_location){
     Node *relaventNode = NULL;
-    std::cout << "Looking for: " << cur_location -> streetnum << "st " \
+    std::cout << "Looking for: " << (cur_location -> streetnum) - 1 << "st " \
               << cur_location -> avenuenum \
-              << " South Street" << std::endl;
+              << " South Street... ";
 
-    // TODO: Loop through all the nodes in nodeVect
+    // Loop through all the nodes in nodeVect
     for(int i = 0; i < nodeVect.size(); i++){
         // Condition:
         //      if streetnum property is equal to streetnum + 1 and avenue is the same, return the node
         if( nodeVect[i] -> streetnum == (cur_location -> streetnum) - 1 &&\
             nodeVect[i] -> avenuenum == cur_location -> avenuenum){
+            std::cout << "Found!" << std::endl;
             relaventNode = nodeVect[i];
             break;
         }else{
@@ -102,19 +73,19 @@ Node *search_SS_Node(Node *cur_location){
     return relaventNode;
 }
 
-Node *search_WA_Node(Node *cur_location){
-    // Find the Avenue WEST of cur_location, WEST increments
+GoPS_Map::Node *GoPS_Map::search_WA_Node(Node *cur_location){
     Node *relaventNode = NULL;
     std::cout << "Looking for: " << cur_location -> streetnum << "st " \
-              << cur_location -> avenuenum \
-              << " West Avenue" << std::endl;;
+              << (cur_location -> avenuenum) + 1\
+              << " West Avenue... ";
 
     // TODO: Loop through all the nodes in nodeVect
     for(int i = 0; i < nodeVect.size(); i++){
         // Condition:
         //      if streetnumproperty is equal to avenue + 1 and avenue is the same, return the node
-        if( nodeVect[i] -> streetnum == (cur_location -> avenuenum) + 1 &&\
-            nodeVect[i] -> avenuenum == cur_location -> streetnum){
+        if( nodeVect[i] -> avenuenum == (cur_location -> avenuenum) + 1 &&\
+            nodeVect[i] -> streetnum == cur_location -> streetnum){
+            std::cout << "Found!" << std::endl;
             relaventNode = nodeVect[i];
             break;
         }else{
@@ -124,7 +95,7 @@ Node *search_WA_Node(Node *cur_location){
     return relaventNode;
 }
 
-Node *searchAllNode(Node *cur_location){
+GoPS_Map::Node *GoPS_Map::searchAllNodes(Node *cur_location){
     std::cout << "Looking for: " << cur_location -> streetnum << "st " \
               << cur_location -> avenuenum << std::endl;;
     Node *NSNode, *EANode, *SSNode, *WANode;
@@ -164,7 +135,7 @@ Node *searchAllNode(Node *cur_location){
     return cur_location;
 };
     
-void create_node(int streetnum, int avenuenum, bool auto_add = false){
+void GoPS_Map::create_node(int streetnum, int avenuenum, bool auto_add ){
     Node *temp_location = new Node;
     // Iterator used to store the position  
     // of searched element 
@@ -179,7 +150,7 @@ void create_node(int streetnum, int avenuenum, bool auto_add = false){
 
     if( auto_add ) {
         // Search for all relavent streets/avcenues of a node
-        Node *found_location = searchAllNode(temp_location);
+        Node *found_location = searchAllNodes(temp_location);
         // Create an iterator
         it = std::find(nodeVect.begin(), nodeVect.end(), found_location);
         // Check if nodeVect contains found_location
@@ -195,12 +166,15 @@ void create_node(int streetnum, int avenuenum, bool auto_add = false){
 int main(){
     std::cout << "Running GoPS_DS.cpp" << std::endl;
     bool auto_add;
-    create_node(59, 10, auto_add = true);   //Origin
 
-    create_node(60, 10);   //North
-    create_node(59, 9);    //East
-    create_node(58, 10);   //South
-    create_node(59, 11);   //West
+    GoPS_Map GoPSMap;
+    GoPSMap.create_node(60, 10);   //North
+    GoPSMap.create_node(59, 9);    //East
+    GoPSMap.create_node(58, 10);   //South
+    GoPSMap.create_node(59, 11);   //West
+
+    GoPSMap.create_node(59, 10, auto_add = true);   //Origin
+
 
     return 0;
 };
